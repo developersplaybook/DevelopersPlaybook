@@ -214,12 +214,13 @@ class ProductFamily
     }
     public void ShowCurrentState()
     {
+        Console.WriteLine();
         Console.WriteLine("Current product states:");
         for (int i = 0; i < Products.Length; i++)
         {
             Console.WriteLine($"Product {i + 1}: {Products[i].Description}, State: {EnumHelper.GetEnumDescription(Products[i].State)}");
         }
-        Console.WriteLine($"ProductFamily State: {CurrentState}");
+        Console.WriteLine($"ProductFamily State: {EnumHelper.GetEnumDescription(CurrentState)}");
         Console.WriteLine();
     }
 
