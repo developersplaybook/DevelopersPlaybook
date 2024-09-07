@@ -308,6 +308,8 @@ class Program
 {
     static void Main()
     {
+        Console.BackgroundColor = ConsoleColor.DarkBlue;
+        Console.Clear();
         ProductFamily productFamily = new();
 
         while (true)

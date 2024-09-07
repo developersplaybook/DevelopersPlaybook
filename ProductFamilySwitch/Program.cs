@@ -73,6 +73,8 @@ class Program
 {
     static void Main(string[] args)
     {
+        Console.BackgroundColor = ConsoleColor.DarkBlue;
+        Console.Clear();
         ProductFamily productFamily = new();
         bool continueEditing = true;
 
