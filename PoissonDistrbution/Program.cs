@@ -1,4 +1,6 @@
-﻿namespace PoissonDistribution
+﻿using Spectre.Console;
+
+namespace PoissonDistribution
 {
     public class Program
     {
@@ -8,22 +10,25 @@
 
         static void Main()
         {
-            Console.BackgroundColor = ConsoleColor.DarkBlue;
-            Console.Clear();
+            // Set the RGB background color
+            AnsiConsole.Background = new Color(20, 0, 80); // RGB: 20, 0, 80
+            AnsiConsole.Clear(); // Clear the console with the background color
+
+            // Set the complementary text color
+            var textColor = new Color(235, 255, 175); // Complementary RGB: 235, 255, 175
 
             while (true)
             {
                 // Input Lambda
-                Console.WriteLine();
-                Console.WriteLine();
-                Console.Write("Please choose Lambda value greater or equal 1: ");
+                AnsiConsole.MarkupLine("[rgb(235,255,175)]Please choose Lambda value greater or equal 1: [/]");
                 double lambda;
                 while (!double.TryParse(Console.ReadLine(), out lambda) || lambda < 1)
                 {
-                    Console.WriteLine("Invalid input. Please choose Lambda value greater or equal 1: ");
+                    AnsiConsole.MarkupLine("[rgb(235,255,175)]Invalid input. Please choose Lambda value greater or equal 1: [/]");
                 }
 
-                Console.WriteLine("Lambda is " + lambda + ", and the area under the curve is 1:");
+                AnsiConsole.MarkupLine($"[rgb(235,255,175)]Lambda is {lambda}, and the area under the curve is 1:[/]");
+
                 var poisson = new PoissonDistribution(lambda);
                 int maxK = (int)(3 * lambda);
 
@@ -52,7 +57,6 @@
                 // Calculate the y-axis step size
                 double yStep = maxY / NumberOfSteps;
 
-
                 MinProbability = maxY / NumberOfSteps;
                 int startK = maxK;
                 double minY = 1;
@@ -71,14 +75,12 @@
                     }
                 }
 
-
                 startK = startK / 2;
-
 
                 // Print each y-level from maxY to 0, and check values from the dictionary for 'x' or blanks
                 for (double y = maxY; y >= MinProbability; y -= yStep)
                 {
-                    Console.Write($"{y:F4} |"); // Print the y-value on the left side
+                    AnsiConsole.Markup($"[rgb(235,255,175)]{y:F4} |[/]"); // Print the y-value on the left side
                     foreach (var kvp in valuePerK)
                     {
                         if (kvp.Key < startK) continue;
@@ -87,19 +89,18 @@
                         double probability = kvp.Value;
                         if (Math.Abs(probability - y) < yStep / 2)
                         {
-                            Console.Write("  x "); // Print 'x' if the y-value is close to the probability
+                            AnsiConsole.Markup("[rgb(235,255,175)]  x [/]");
                         }
                         else
                         {
-                            Console.Write("    "); // Print blanks otherwise
+                            AnsiConsole.Markup("[rgb(235,255,175)]    [/]");
                         }
                     }
-                    Console.WriteLine();
+                    AnsiConsole.WriteLine();
                 }
 
-
                 // Print footer (x-axis labels)
-                Console.Write("       ");
+                AnsiConsole.Markup("[rgb(235,255,175)]       [/]");
                 if (startK > 0)
                 {
                     maxK = maxK - 2 * startK;
@@ -107,9 +108,9 @@
 
                 for (int k = startK; k <= maxK; k += step)
                 {
-                    Console.Write($"{k,4}"); // Print the x-values (k-values), adjust for the step
+                    AnsiConsole.Markup($"[rgb(235,255,175)]{k,4}[/]"); // Print the x-values (k-values), adjust for the step
                 }
-                Console.WriteLine();
+                AnsiConsole.WriteLine();
             }
         }
     }
